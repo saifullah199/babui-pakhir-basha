@@ -1,7 +1,67 @@
+import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
+
 const ApartmentCard = ({ room }) => {
-  console.log(room);
+  const { user } = useAuth();
   const { apartment_image, block_name, floor_no, rent, apartment_no, _id } =
     room;
+
+  const handleAddAgreement = async (e) => {
+    const userName = user.displayName;
+    const userEmail = user.email;
+    const status = "pending";
+    const agreement = {
+      userName,
+      userEmail,
+      block_name,
+      floor_no,
+      rent,
+      apartment_no,
+      status,
+    };
+    console.log(agreement);
+
+    // send data to the server
+
+    // try {
+    //   const { data } = await axios.post(
+    //     `${import.meta.env.VITE_API_URL}/agreements`,
+    //     agreement
+    //   );
+    //   console.log(data);
+    //   if (data.insertedId) {
+    //     Swal.fire({
+    //       title: "Success!",
+    //       text: "agreement Added Successfully",
+    //       icon: "success",
+    //       confirmButtonText: "Cool",
+    //     });
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+    fetch("http://localhost:5000/agreements", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(agreement),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "Agreement Added Successfully",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
+        }
+      });
+  };
   return (
     <div>
       <div className="card w-96 bg-base-100 shadow-xl">
@@ -16,7 +76,10 @@ const ApartmentCard = ({ room }) => {
             <p>Rent: {rent}</p>
           </div>
           <div className="card-actions justify-start">
-            <button className="btn btn-outline btn-error">
+            <button
+              onClick={handleAddAgreement}
+              className="btn btn-outline btn-error"
+            >
               Make Agreement{" "}
             </button>
           </div>

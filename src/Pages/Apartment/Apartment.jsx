@@ -4,23 +4,68 @@ import ApartmentCard from "./ApartmentCard";
 import axios from "axios";
 
 const Apartment = () => {
-  const [itemPerpage, setItemPerPage] = useState(2);
+  const [itemPerpage, setItemPerPage] = useState(6);
   const [count, setCount] = useState(0);
-  const [rooms] = useRooms();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rooms, setRooms] = useState([]);
+
+  // Function to fetch rooms data with pagination
+  const fetchRooms = async () => {
+    const { data } = await axios(
+      `${
+        import.meta.env.VITE_API_URL
+      }/all-rooms?page=${currentPage}&size=${itemPerpage}`
+    );
+    setRooms(data);
+  };
+
+  // Fetch total count of rooms
+  const fetchRoomCount = async () => {
+    const { data } = await axios(`${import.meta.env.VITE_API_URL}/room-count`);
+    setCount(data.count);
+  };
 
   useEffect(() => {
-    const getCount = async () => {
-      const { data } = await axios(`${import.meta.env.VITE_API_URL}/rooms`);
+    fetchRooms();
+  }, [currentPage, itemPerpage]);
 
-      setCount(data.length);
-    };
-    getCount();
+  useEffect(() => {
+    fetchRoomCount();
   }, []);
 
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const { data } = await axios(
+  //       `${
+  //         import.meta.env.VITE_API_URL
+  //       }/all-rooms?page=${currentPage}&size=${itemPerpage}`
+  //     );
+
+  //     setCount(data.length);
+  //   };
+  //   getData();
+  // }, [currentPage, itemPerpage]);
+
+  // useEffect(() => {
+  //   const getCount = async () => {
+  //     const { data } = await axios(
+  //       `${import.meta.env.VITE_API_URL}/room-count`
+  //     );
+
+  //     setCount(data.count);
+  //   };
+  //   getCount();
+  // }, []);
+
+  //  handle pagination button
+  const handlePaginationButton = (value) => {
+    console.log(value);
+    setCurrentPage(value);
+  };
+
   console.log(count);
-  const pages = [...Array(count / itemPerpage).keys()].map(
-    (element) => element + 1
-  );
+  const numberOfPages = Math.ceil(count / itemPerpage);
+  const pages = [...Array(numberOfPages).keys()].map((element) => element + 1);
   return (
     <div>
       {rooms.length}
@@ -31,7 +76,10 @@ const Apartment = () => {
       </div>
       <div className="flex justify-center mt-12">
         {/* previous button */}
-        <button className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:bg-blue-500  hover:text-white">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          className="px-4 py-2 mx-1 text-gray-700 disabled:text-gray-500 capitalize bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:bg-blue-500  hover:text-white"
+        >
           <div className="flex items-center -mx-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,6 +102,7 @@ const Apartment = () => {
         {/* pages */}
         {pages.map((btnNum) => (
           <button
+            onClick={() => handlePaginationButton(btnNum)}
             key={btnNum}
             className={`hidden px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline hover:bg-blue-500  hover:text-white`}
           >

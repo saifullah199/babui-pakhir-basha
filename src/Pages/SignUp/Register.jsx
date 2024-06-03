@@ -3,10 +3,12 @@ import useAuth from "../../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Register = () => {
   const { googleSignIn, user, createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -24,21 +26,21 @@ const Register = () => {
         const userInfo = {
           name: data.name,
           email: data.email,
+          role: "user",
+          photoURL: data.photo,
         };
-        // axiosPublic.post('/users',userInfo)
-        // .then(res => {
-        //   if(res.data.insertedId){
-        //     console.log('user added to the database')
+        // axiosPublic.post("/users", userInfo).then((res) => {
+        //   if (res.data.insertedId) {
+        //     console.log("user added to the database");
         //     Swal.fire({
         //       position: "top-end",
         //       icon: "success",
         //       title: "User Added successfully",
         //       showConfirmButton: false,
-        //       timer: 1500
+        //       timer: 1500,
         //     });
-        //
         //   }
-        // })
+        // });
         navigate("/");
       });
     });
@@ -51,11 +53,9 @@ const Register = () => {
         email: result.user?.email,
         name: result.user?.displayName,
       };
-      // axiosPublic.post('/users', userInfo)
-      // .then(res => {
-      //   console.log(res.data)
-
-      // })
+      axiosPublic.post("/users", userInfo).then((res) => {
+        console.log(res.data);
+      });
       navigate("/");
     });
   };
@@ -70,11 +70,6 @@ const Register = () => {
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">Register now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
           </div>
           <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
@@ -106,6 +101,24 @@ const Register = () => {
                 />
                 {errors.email && <span>This field is required</span>}
               </div>
+              {/* <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Photo </span>
+                </label>
+                <input
+                  type="text"
+                  {...register("photo", {
+                    required: true,
+                    maxLength: 20,
+                    minLength: 6,
+                  })}
+                  placeholder="Photo"
+                  name="photo"
+                  className="input input-bordered"
+                  required
+                />
+                {errors.photo && <span>This field is required</span>}
+              </div> */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Password</span>

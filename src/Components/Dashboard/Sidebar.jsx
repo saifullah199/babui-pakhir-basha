@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { GrLogout } from "react-icons/gr";
 import { FcSettings } from "react-icons/fc";
-import { BsFillHouseAddFill, BsFingerprint } from "react-icons/bs";
-import { GrUserAdmin } from "react-icons/gr";
+
 import { AiOutlineBars } from "react-icons/ai";
-import { BsGraphUp } from "react-icons/bs";
+
 import { NavLink } from "react-router-dom";
 
 import { Link } from "react-router-dom";
-import { MdHomeWork } from "react-icons/md";
+
 import useAuth from "../../Hooks/useAuth";
+import useRole from "../../Hooks/useRole";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [isActive, setActive] = useState(false);
+  const [role] = useRole();
+  console.log(role);
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
@@ -78,7 +80,29 @@ const Sidebar = () => {
                 <span className="mx-4 font-medium">Statistics</span>
               </NavLink> */}
 
-              {/* Add Room */}
+              {/*make payment */}
+              {/* <MenuItem label="Make_Payments" address="makepayment" /> */}
+              <NavLink
+                to="makepayment"
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
+                  }`
+                }
+              >
+                <span className="mx-4 font-medium">Make Payments</span>
+              </NavLink>
+
+              <NavLink
+                to="paymenthistory"
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
+                  }`
+                }
+              >
+                <span className="mx-4 font-medium">Payment History</span>
+              </NavLink>
               <NavLink
                 to="anouncement"
                 className={({ isActive }) =>
@@ -89,19 +113,6 @@ const Sidebar = () => {
               >
                 <span className="mx-4 font-medium">Anouncement</span>
               </NavLink>
-              {/* My Listing */}
-              {/* <NavLink
-                to="my-listings"
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
-                  }`
-                }
-              >
-                <MdHomeWork className="w-5 h-5" />
-
-                <span className="mx-4 font-medium">My Listings</span>
-              </NavLink> */}
             </nav>
           </div>
         </div>

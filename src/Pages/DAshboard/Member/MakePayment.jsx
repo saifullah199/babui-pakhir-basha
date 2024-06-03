@@ -1,7 +1,9 @@
+import MakePayForm from "../Member/Form/MakePayForm";
+
 const MakePayment = () => {
   return (
-    <div>
-      <h3>Make a payment</h3>
+    <div className="mt-10">
+      <MakePayForm />
     </div>
   );
 };

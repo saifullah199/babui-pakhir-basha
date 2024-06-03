@@ -12,10 +12,10 @@ const useRole = () => {
     enabled: !loading && !!user?.email,
     queryFn: async () => {
       const { data } = await axiosPublic.get(`/user/${user?.email}`);
-      return data;
+      return data.role;
     },
   });
-
+  console.log(role);
   return [role, isLoading];
 };
 

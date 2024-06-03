@@ -10,6 +10,9 @@ import { Link } from "react-router-dom";
 
 import useAuth from "../../Hooks/useAuth";
 import useRole from "../../Hooks/useRole";
+import MemberMenu from "./Menu/MemberMenu";
+import UserMenu from "./Menu/UserMenu";
+import AdminMenu from "./Menu/AdminMenu";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -82,7 +85,22 @@ const Sidebar = () => {
 
               {/*make payment */}
               {/* <MenuItem label="Make_Payments" address="makepayment" /> */}
+              {/* {role === "member" && <MemberMenu />}
+              {role === "user" && <UserMenu />}
+              {role === "admin" && <AdminMenu />} */}
+
               <NavLink
+                to="managemembers"
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
+                  }`
+                }
+              >
+                <span className="mx-4 font-medium">Manage Members</span>
+              </NavLink>
+
+              {/* <NavLink
                 to="makepayment"
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
@@ -112,7 +130,7 @@ const Sidebar = () => {
                 }
               >
                 <span className="mx-4 font-medium">Anouncement</span>
-              </NavLink>
+              </NavLink> */}
             </nav>
           </div>
         </div>

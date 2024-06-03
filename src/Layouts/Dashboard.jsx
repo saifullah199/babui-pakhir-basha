@@ -7,7 +7,7 @@ const Dashboard = () => {
   return (
     <div>
       <div className="flex">
-        <div>
+        <div className="w-64 min-h-screen">
           <ul>
             <Sidebar />
             {/* <li>

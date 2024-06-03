@@ -7,6 +7,13 @@ import Register from "../Pages/SignUp/Register";
 import Dashboard from "../Layouts/Dashboard";
 import MyProfile from "../Pages/DAshboard/MyProfile";
 import Anouncement from "../Pages/DAshboard/Anouncement";
+import AgreementRequest from "../Pages/DAshboard/Admin/AgreementRequest";
+import MakeAnounce from "../Pages/DAshboard/Admin/MakeAnounce";
+
+import ManageMembers from "../Pages/DAshboard/Admin/ManageMembers";
+import MakePayment from "../Pages/DAshboard/Member/MakePayment";
+import PaymentHistory from "../Pages/DAshboard/Member/PaymentHistory";
+import ManageCoupons from "../Pages/DAshboard/Admin/ManageCoupons";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +48,32 @@ const router = createBrowserRouter([
       {
         path: "anouncement",
         element: <Anouncement />,
+      },
+      // Admin routes
+      {
+        path: "agreementrequest",
+        element: <AgreementRequest />,
+      },
+      {
+        path: "makeanounce",
+        element: <MakeAnounce />,
+      },
+      {
+        path: "managecoupon",
+        element: <ManageCoupons />,
+      },
+      {
+        path: "managemembers",
+        element: <ManageMembers />,
+      },
+      // member routes
+      {
+        path: "makepayment",
+        element: <MakePayment />,
+      },
+      {
+        path: "paymenthistory",
+        element: <PaymentHistory />,
       },
     ],
   },

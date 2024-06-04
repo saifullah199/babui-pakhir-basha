@@ -3,7 +3,7 @@ import useRole from "../../Hooks/useRole";
 
 const MyProfile = () => {
   const { user } = useAuth();
-  const [role, isLoading] = useRole();
+  // const { role, isLoading } = useRole();
   return (
     <div>
       <div className="hero min-h-screen ">
@@ -12,9 +12,7 @@ const MyProfile = () => {
             src={user?.photoUrl}
             className="max-w-sm rounded-lg shadow-2xl"
           />
-          <p className="p-2 uppercase px-4 text-xs text-white bg-pink-500 rounded-full">
-            {role}
-          </p>
+          <p className="p-2 uppercase px-4 text-xs text-white bg-pink-500 rounded-full"></p>
           <div>
             <h1 className="text-5xl font-bold"> {user?.dispalyName} </h1>
             <p className="py-6">Email: {user?.email}</p>

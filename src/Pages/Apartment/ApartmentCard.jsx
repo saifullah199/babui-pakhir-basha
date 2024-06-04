@@ -11,6 +11,7 @@ const ApartmentCard = ({ room }) => {
     const userName = user.displayName;
     const userEmail = user.email;
     const status = "pending";
+    const role = "user";
     const agreement = {
       userName,
       userEmail,
@@ -19,28 +20,11 @@ const ApartmentCard = ({ room }) => {
       rent,
       apartment_no,
       status,
+      role,
     };
     console.log(agreement);
 
     // send data to the server
-
-    // try {
-    //   const { data } = await axios.post(
-    //     `${import.meta.env.VITE_API_URL}/agreements`,
-    //     agreement
-    //   );
-    //   console.log(data);
-    //   if (data.insertedId) {
-    //     Swal.fire({
-    //       title: "Success!",
-    //       text: "agreement Added Successfully",
-    //       icon: "success",
-    //       confirmButtonText: "Cool",
-    //     });
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
 
     fetch("http://localhost:5000/agreements", {
       method: "POST",

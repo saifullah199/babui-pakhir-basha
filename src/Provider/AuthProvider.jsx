@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
   // save user
   const saveUser = async (user) => {
     const currentUser = {
-      name: user?.displayName,
+      name: user?.name,
       email: user?.email,
       role: "user",
     };

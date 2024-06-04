@@ -35,8 +35,6 @@ const Sidebar = () => {
   // const adminRole = admin.forEach((user) => console.log(user.role));
   // console.log(adminRole);
 
-  const isAdmin = true;
-
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive);
@@ -86,11 +84,11 @@ const Sidebar = () => {
 
             {/*  Menu Items */}
             <nav>
-              {/* {role === "member" && <MemberMenu />}
+              {role === "member" && <MemberMenu />}
               {role === "user" && <UserMenu />}
-              {role === "admin" && <AdminMenu />} */}
+              {role === "admin" && <AdminMenu />}
 
-              <NavLink
+              {/* <NavLink
                 to="managemembers"
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
@@ -109,7 +107,7 @@ const Sidebar = () => {
                 }
               >
                 <span className="mx-4 font-medium">Agreement Request</span>
-              </NavLink>
+              </NavLink> */}
 
               {/* <NavLink
                 to="makepayment"

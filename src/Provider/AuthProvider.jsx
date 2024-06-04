@@ -66,6 +66,7 @@ const AuthProvider = ({ children }) => {
       console.log("user in the auth state changed", currentUser);
       setUser(currentUser);
       saveUser(currentUser);
+      setLoading(false);
     });
     return () => {
       return unsubscribe();

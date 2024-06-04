@@ -10,11 +10,16 @@ const useRole = () => {
   const axiosPublic = useAxiosPublic();
 
   const { data: role, isLoading } = useQuery({
-    queryKey: ["role", user?.email],
-    enabled: !loading && !!user?.email,
+    queryKey: ["role123", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosPublic(`/user/${user?.email}`);
-      return res.data;
+      try {
+        const { data } = await axiosPublic(`/user/${user?.email}`);
+        console.log(data);
+        return data.role;
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
   console.log(user?.email);

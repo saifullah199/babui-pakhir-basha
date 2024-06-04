@@ -32,6 +32,12 @@ const AgreementRequest = () => {
     console.log(data);
     // await mutateAsync({ id, status });
   };
+  const handleUpdateRole = async (id, prevRole, role) => {
+    console.log(id, prevRole, role);
+    const { data } = await axiosPublic.patch(`/user/${id}`, { role });
+    console.log(data);
+    // await mutateAsync({ id, status });
+  };
 
   return (
     <div className="grid grid-cols-3 gap-5">
@@ -54,14 +60,22 @@ const AgreementRequest = () => {
               </div>
               <div className="card-actions justify-between">
                 <button
-                  onClick={() =>
-                    handleStatus(agreement._id, agreement.status, "checked")
-                  }
+                  onClick={() => {
+                    handleStatus(agreement._id, agreement.status, "checked"),
+                      handleUpdateRole(agreement._id, agreement.role, "member");
+                  }}
                   className="btn  btn-error"
                 >
                   Accept
                 </button>
-                <button className="btn btn-outline btn-error">Reject</button>
+                <button
+                  onClick={() =>
+                    handleStatus(agreement._id, agreement.status, "checked")
+                  }
+                  className="btn btn-outline btn-error"
+                >
+                  Reject
+                </button>
               </div>
             </div>
           </div>

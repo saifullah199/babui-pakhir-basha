@@ -1,9 +1,22 @@
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const ApartmentCard = ({ room }) => {
   const { user } = useAuth();
+  // const axiosPublic = useAxiosPublic();
+
+  // const { data: users = [] } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: async () => {
+  //     const { data } = await axiosPublic(`/users`);
+  //     return data;
+  //   },
+  // });
+
+  // console.log(users);
   const { apartment_image, block_name, floor_no, rent, apartment_no, _id } =
     room;
 

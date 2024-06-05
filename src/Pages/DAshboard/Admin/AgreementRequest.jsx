@@ -4,9 +4,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import axios from "axios";
+import useAuth from "../../../Hooks/useAuth";
 
 const AgreementRequest = () => {
   const axiosPublic = useAxiosPublic();
+  const { user } = useAuth();
 
   const { data: agreements = [] } = useQuery({
     queryKey: ["agreements"],
@@ -26,17 +28,34 @@ const AgreementRequest = () => {
     },
   });
 
+  // const handleAccept = async (agreementId, userId) => {
+  //   try {
+  //     const { data } = await axiosPublic.patch(
+  //       `/accept/${agreementId}/${userId}`
+  //     );
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error("Error updating agreement and user role:", error);
+  //   }
+  // };
+
+  // // Assuming you have a way to get the userId, for example from the agreement data
+  // const handleStatusAcceptClick = (agreement) => {
+  //   handleAccept(agreement._id, agreement.agreementId); // Replace agreement.userId with the correct user Id
+  // };
+
   const handleStatus = async (id, prevStatus, status) => {
     console.log(id, prevStatus, status);
     const { data } = await axiosPublic.patch(`/agreement/${id}`, { status });
     console.log(data);
     // await mutateAsync({ id, status });
   };
-  const handleUpdateRole = async (id, prevRole, role) => {
-    console.log(id, prevRole, role);
-    const { data } = await axiosPublic.patch(`/user/${id}`, { role });
+  const handleUpdateRole = async (email, prevRole, newRole) => {
+    console.log(email, prevRole, newRole);
+    const { data } = await axiosPublic.patch(`/user/${email}`, {
+      role: newRole,
+    });
     console.log(data);
-    // await mutateAsync({ id, status });
   };
 
   return (
@@ -62,8 +81,9 @@ const AgreementRequest = () => {
                 <button
                   onClick={() => {
                     handleStatus(agreement._id, agreement.status, "checked"),
-                      handleUpdateRole(agreement._id, agreement.role, "member");
+                      handleUpdateRole(agreement.userEmail, "user", "member");
                   }}
+                  // onClick={() => handleStatusAcceptClick(agreement)}
                   className="btn  btn-error"
                 >
                   Accept

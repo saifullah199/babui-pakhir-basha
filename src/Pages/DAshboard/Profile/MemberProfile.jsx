@@ -10,7 +10,7 @@ const MemberProfile = () => {
   const [agreements, setAgreements] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/person/${user?.email}`)
+    fetch(`https://server-peach-omega-42.vercel.app/person/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setAgreements(data);

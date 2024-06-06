@@ -14,6 +14,7 @@ import ManageMembers from "../Pages/DAshboard/Admin/ManageMembers";
 import MakePayment from "../Pages/DAshboard/Member/MakePayment";
 import PaymentHistory from "../Pages/DAshboard/Member/PaymentHistory";
 import ManageCoupons from "../Pages/DAshboard/Admin/ManageCoupons";
+import PayAgreement from "../Pages/DAshboard/Member/Form/PayAgreement";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "myprofile",
         element: <MyProfile />,
+      },
+      {
+        path: "pay",
+        element: <PayAgreement />,
       },
       {
         path: "anouncement",

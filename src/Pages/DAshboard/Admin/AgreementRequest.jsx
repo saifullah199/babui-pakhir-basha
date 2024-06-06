@@ -21,12 +21,12 @@ const AgreementRequest = () => {
   const [startDate, setStartDate] = useState(new Date());
   const requestedDate = startDate;
 
-  const { mutateAsync } = useMutation({
-    mutationFn: async ({ id, status }) => {
-      const { data } = await axiosPublic.patch(`/agreement/${id}`, { status });
-      console.log(data);
-    },
-  });
+  // const { mutateAsync } = useMutation({
+  //   mutationFn: async ({ id, status }) => {
+  //     const { data } = await axiosPublic.patch(`/agreement/${id}`, { status });
+  //     console.log(data);
+  //   },
+  // });
 
   // const handleAccept = async (agreementId, userId) => {
   //   try {

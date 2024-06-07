@@ -3,24 +3,29 @@ import { useEffect, useState } from "react";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import useCart from "../../../../Hooks/useCart";
 
-const CheckOutForm = () => {
+const CheckOutForm = ({ agreement }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const axiosPublic = useAxiosPublic();
-  const [cart] = useCart();
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
-  useEffect(() => {
-    if (totalPrice > 0) {
-      axiosPublic
-        .post("/create-payment-intent", { price: totalPrice })
-        .then((res) => {
-          console.log(res.data.clientSecret);
-        });
-    }
-  }, [axiosPublic, totalPrice]);
+  console.log(agreement);
+
+  const price = agreement.map((ag) => ag.rent);
+  console.log(price);
+  // const [cart] = useCart();
+  // const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+  // console.log(rent);
+  // useEffect(() => {
+  //   if (totalPrice > 0) {
+  //     axiosPublic
+  //       .post("/create-payment-intent", { price: totalPrice })
+  //       .then((res) => {
+  //         console.log(res.data.clientSecret);
+  //       });
+  //   }
+  // }, [axiosPublic, totalPrice]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -66,9 +71,16 @@ const CheckOutForm = () => {
           },
         }}
       />
-      <button className="btn btn-primary my-4" type="submit" disabled={!stripe}>
-        Pay
-      </button>
+      {agreement.map((ag) => (
+        <button
+          key={ag._id}
+          className="btn btn-primary my-4"
+          type="submit"
+          disabled={!stripe || !clientSecret}
+        >
+          Pay {ag.rent}
+        </button>
+      ))}
       <p> {error} </p>
     </form>
   );

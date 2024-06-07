@@ -113,7 +113,7 @@ const MakePayForm = () => {
               </div>
             </div>
 
-            <Link to="/dashboard/pay">
+            <Link to={`/dashboard/pay/${agreement.userEmail}`}>
               <button className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-rose-500">
                 Pay
               </button>

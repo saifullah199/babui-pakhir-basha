@@ -47,8 +47,10 @@ const router = createBrowserRouter([
         element: <MyProfile />,
       },
       {
-        path: "pay",
+        path: "pay/:email",
         element: <PayAgreement />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/person/${params.email}`),
       },
       {
         path: "anouncement",

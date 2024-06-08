@@ -28,22 +28,6 @@ const AgreementRequest = () => {
   //   },
   // });
 
-  // const handleAccept = async (agreementId, userId) => {
-  //   try {
-  //     const { data } = await axiosPublic.patch(
-  //       `/accept/${agreementId}/${userId}`
-  //     );
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.error("Error updating agreement and user role:", error);
-  //   }
-  // };
-
-  // // Assuming you have a way to get the userId, for example from the agreement data
-  // const handleStatusAcceptClick = (agreement) => {
-  //   handleAccept(agreement._id, agreement.agreementId); // Replace agreement.userId with the correct user Id
-  // };
-
   const handleStatus = async (id, prevStatus, status) => {
     console.log(id, prevStatus, status);
     const { data } = await axiosPublic.patch(`/agreement/${id}`, { status });
@@ -59,48 +43,67 @@ const AgreementRequest = () => {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-5">
-      {agreements.map((agreement) => (
-        <div key={agreement._id}>
-          <div className="card w-72 bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">Block name:{agreement.block_name}</h2>
-              <div className="grid grid-cols-2 gap-3 font-semibold">
-                <p>Floor no:{agreement.floor_no}</p>
-                <p>Apartment no : {agreement.apartment_no} </p>
-                <p>Rent: {agreement.rent}</p>
-                <p>
-                  {" "}
-                  Request Date:{new Date(
-                    requestedDate
-                  ).toLocaleDateString()}{" "}
-                </p>
-                <p>{agreement.role}</p>
-              </div>
-              <div className="card-actions justify-between">
-                <button
-                  onClick={() => {
-                    handleStatus(agreement._id, agreement.status, "checked"),
-                      handleUpdateRole(agreement.userEmail, "user", "member");
-                  }}
-                  // onClick={() => handleStatusAcceptClick(agreement)}
-                  className="btn  btn-error"
-                >
-                  Accept
-                </button>
-                <button
-                  onClick={() =>
-                    handleStatus(agreement._id, agreement.status, "checked")
-                  }
-                  className="btn btn-outline btn-error"
-                >
-                  Reject
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
+    <div>
+      <div className="overflow-x-auto">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>Floor no</th>
+              <th>Block Name</th>
+              <th>Apartment No</th>
+              <th>Rent</th>
+              <th>Request Date</th>
+              <th>Accept</th>
+              <th>Reject</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {agreements
+              .filter((a) => a.status === "pending")
+              .map((agreement, index) => (
+                <tr key="agreement._id">
+                  <th>{agreement.floor_no}</th>
+                  <td>{agreement.block_name}</td>
+                  <td>{agreement.apartment_no}</td>
+                  <td>{agreement.rent}</td>
+                  <td>{new Date(requestedDate).toLocaleDateString()}</td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        handleStatus(
+                          agreement._id,
+                          agreement.status,
+                          "checked"
+                        ),
+                          handleUpdateRole(
+                            agreement.userEmail,
+                            "user",
+                            "member"
+                          );
+                      }}
+                      // onClick={() => handleStatusAcceptClick(agreement)}
+                      className="btn  btn-error"
+                    >
+                      Accept
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        handleStatus(agreement._id, agreement.status, "checked")
+                      }
+                      className="btn btn-outline btn-error"
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

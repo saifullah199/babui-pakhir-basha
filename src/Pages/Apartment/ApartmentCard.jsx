@@ -24,7 +24,7 @@ const ApartmentCard = ({ room }) => {
     const userName = user.displayName;
     const userEmail = user.email;
     const status = "pending";
-    const role = "user";
+
     const agreement = {
       userName,
       userEmail,
@@ -33,7 +33,6 @@ const ApartmentCard = ({ room }) => {
       rent,
       apartment_no,
       status,
-      role,
     };
     console.log(agreement);
 

@@ -10,6 +10,7 @@ import {
 import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
 import axios from "axios";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 
@@ -17,7 +18,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
-  // const axiosPublic = useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
 
   // create user
   const createUser = (email, password) => {
@@ -57,10 +58,7 @@ const AuthProvider = ({ children }) => {
       email: user?.email,
       role: "user",
     };
-    const { data } = await axios.put(
-      `https://server-peach-omega-42.vercel.app/user`,
-      currentUser
-    );
+    const { data } = await axios.put(`http://localhost:5000/user`, currentUser);
     return data;
   };
 
@@ -69,12 +67,23 @@ const AuthProvider = ({ children }) => {
       console.log("user in the auth state changed", currentUser);
       setUser(currentUser);
       saveUser(currentUser);
+      if (currentUser) {
+        // get token and stire client
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
+      } else {
+        // localStorage.removeItem("access-token");
+      }
       setLoading(false);
     });
     return () => {
       return unsubscribe();
     };
-  }, []);
+  }, [axiosPublic]);
   const authInfo = {
     user,
     createUser,

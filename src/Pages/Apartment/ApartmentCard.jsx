@@ -38,7 +38,7 @@ const ApartmentCard = ({ room }) => {
 
     // send data to the server
 
-    fetch("https://server-peach-omega-42.vercel.app/agreements", {
+    fetch("http://localhost:5000/agreements", {
       method: "POST",
       headers: {
         "content-type": "application/json",

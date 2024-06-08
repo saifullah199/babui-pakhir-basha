@@ -7,7 +7,7 @@ const MakePayForm = () => {
   const { user, loading } = useAuth();
 
   useEffect(() => {
-    fetch(`https://server-peach-omega-42.vercel.app/person/${user?.email}`)
+    fetch(`http://localhost:5000/person/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setAgreements(data);

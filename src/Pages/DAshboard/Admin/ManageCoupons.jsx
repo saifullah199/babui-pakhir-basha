@@ -25,7 +25,7 @@ const ManageCoupons = () => {
     const newCoupons = { coupon, discount, description, available };
     console.log(newCoupons);
 
-    fetch("https://server-peach-omega-42.vercel.app/coupons", {
+    fetch("http://localhost:5000/coupons", {
       method: "POST",
       headers: {
         "content-type": "application/json",

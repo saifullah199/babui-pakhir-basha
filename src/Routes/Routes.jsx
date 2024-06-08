@@ -15,6 +15,7 @@ import MakePayment from "../Pages/DAshboard/Member/MakePayment";
 import PaymentHistory from "../Pages/DAshboard/Member/PaymentHistory";
 import ManageCoupons from "../Pages/DAshboard/Admin/ManageCoupons";
 import PayAgreement from "../Pages/DAshboard/Member/Form/PayAgreement";
+import PrivateRoute from "./PrivateRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,7 +27,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/apartment",
-        element: <Apartment />,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <Apartment />{" "}
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -40,7 +46,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "myprofile",

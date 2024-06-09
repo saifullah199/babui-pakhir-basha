@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
-
+import img1 from "../../src/assets/images/logo.png";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
@@ -11,6 +11,7 @@ const Navbar = () => {
   return (
     <div className="navbar  bg-opacity-30 bg-black text-white ">
       <div className="flex-1">
+        <img className="w-[50px] h-[50px]" src={img1} alt="" />
         <a className="btn btn-ghost text-xl">Babui Pakhir Basha </a>
       </div>
       <div className="flex-none gap-2">
@@ -42,7 +43,7 @@ const Navbar = () => {
                 <li>
                   <a className="justify-between"> {user?.displayName} </a>
                 </li>
-                <Link to="/dashboard">
+                <Link to="/dashboard/myprofile">
                   <a>Dashboard</a>
                 </Link>
                 <li>

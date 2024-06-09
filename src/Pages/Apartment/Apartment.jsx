@@ -33,30 +33,6 @@ const Apartment = () => {
     fetchRoomCount();
   }, []);
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const { data } = await axios(
-  //       `${
-  //         import.meta.env.VITE_API_URL
-  //       }/all-rooms?page=${currentPage}&size=${itemPerpage}`
-  //     );
-
-  //     setCount(data.length);
-  //   };
-  //   getData();
-  // }, [currentPage, itemPerpage]);
-
-  // useEffect(() => {
-  //   const getCount = async () => {
-  //     const { data } = await axios(
-  //       `${import.meta.env.VITE_API_URL}/room-count`
-  //     );
-
-  //     setCount(data.count);
-  //   };
-  //   getCount();
-  // }, []);
-
   //  handle pagination button
   const handlePaginationButton = (value) => {
     console.log(value);
@@ -67,8 +43,7 @@ const Apartment = () => {
   const numberOfPages = Math.ceil(count / itemPerpage);
   const pages = [...Array(numberOfPages).keys()].map((element) => element + 1);
   return (
-    <div>
-      {rooms.length}
+    <div className="mt-8">
       <div className="grid grid-cols-3 gap-4">
         {rooms.map((room) => (
           <ApartmentCard key={room._id} room={room}></ApartmentCard>

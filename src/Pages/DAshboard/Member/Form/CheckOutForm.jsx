@@ -14,22 +14,18 @@ const CheckOutForm = ({ agreement }) => {
 
   const price = agreement.map((ag) => ag.rent);
   console.log(price);
-  // const [cart] = useCart();
-  // const totalPrice = cart.reduce((total, item) => total + item.price, 0);
-  // console.log(rent);
-  // useEffect(() => {
-  //   if (totalPrice > 0) {
-  //     axiosPublic
-  //       .post("/create-payment-intent", { price: totalPrice })
-  //       .then((res) => {
-  //         console.log(res.data.clientSecret);
-  //       });
-  //   }
-  // }, [axiosPublic, totalPrice]);
+
+  useEffect(() => {
+    if (price > 0) {
+      axiosPublic.post("/create-payment-intent", { price }).then((res) => {
+        console.log(res.data.clientSecret);
+      });
+    }
+  }, [axiosPublic, price]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!stripe || !elements) {
+    if (!stripe) {
       return;
     }
     const card = elements.getElement(CardElement);
@@ -71,16 +67,15 @@ const CheckOutForm = ({ agreement }) => {
           },
         }}
       />
-      {agreement.map((ag) => (
-        <button
-          key={ag._id}
-          className="btn btn-primary my-4"
-          type="submit"
-          disabled={!stripe || !clientSecret}
-        >
-          Pay {ag.rent}
-        </button>
-      ))}
+
+      <button
+        className="btn btn-primary my-4"
+        type="submit"
+        disabled={!stripe || !clientSecret}
+      >
+        Pay {price}
+      </button>
+
       <p> {error} </p>
     </form>
   );

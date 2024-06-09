@@ -3,14 +3,17 @@ import useAuth from "../../../Hooks/useAuth";
 import useRole from "../../../Hooks/useRole";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
 
 const MemberProfile = () => {
   const { user, loading } = useAuth();
   const [role] = useRole();
   const [agreements, setAgreements] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const requestedDate = startDate;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/person/${user?.email}`)
+    fetch(`https://server-peach-omega-42.vercel.app/person/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setAgreements(data);
@@ -20,24 +23,8 @@ const MemberProfile = () => {
 
   // const axiosPublic = useAxiosPublic();
 
-  // const { data: email, isLoading } = useQuery({
-  //   queryKey: ["email", user?.email],
-
-  //   queryFn: async () => {
-  //     try {
-  //       const { data } = await axiosPublic(`/member/${user?.email}`);
-  //       console.log(data);
-  //       return data;
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   },
-  // });
-  // console.log(user?.email);
-
   return (
     <div>
-      Agreements: {agreements.length}
       <div>
         <div className="hero min-h-screen ">
           <div className="hero-content flex-col">
@@ -49,8 +36,17 @@ const MemberProfile = () => {
               {role}
             </p>
             <div>
-              <h1 className="text-5xl font-bold"> {user?.name} </h1>
-              <p className="py-6">Email: {user?.email}</p>
+              <div className="grid grid-cols-2">
+                <h1 className="text-5xl font-bold"> {user?.displayName} </h1>
+                <p className="py-6">Email: {user?.email}</p>
+                <p>
+                  {" "}
+                  Agreements:{" "}
+                  <span className=" bg-pink-500 text-white rounded-full">
+                    {agreements.length}
+                  </span>{" "}
+                </p>
+              </div>
               {/* <button className="btn btn-primary">Get Started</button> */}
               <div>
                 {agreements.map((agreement) => (
@@ -66,6 +62,9 @@ const MemberProfile = () => {
                           type="text"
                           placeholder="Type here"
                           className="input input-bordered w-full max-w-xs"
+                          defaultValue={new Date(
+                            requestedDate
+                          ).toLocaleDateString()}
                         />
                       </label>
                       <label className="form-control w-full max-w-xs">

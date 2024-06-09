@@ -60,7 +60,9 @@ const router = createBrowserRouter([
         path: "pay/:email",
         element: <PayAgreement />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/person/${params.email}`),
+          fetch(
+            `https://server-peach-omega-42.vercel.app/person/${params.email}`
+          ),
       },
       {
         path: "anouncement",

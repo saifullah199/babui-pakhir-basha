@@ -16,9 +16,11 @@ const ManageMembers = () => {
 
   console.log(users);
 
-  const handleUpdateRole = async (id, prevRole, newRole) => {
-    console.log(id, prevRole, newRole);
-    const { data } = await axiosPublic.patch(`/user/${id}`, { role: newRole });
+  const handleUpdateRole = async (email, prevRole, newRole) => {
+    console.log(email, prevRole, newRole);
+    const { data } = await axiosPublic.patch(`/member/${email}`, {
+      role: newRole,
+    });
     console.log(data);
   };
   return (
@@ -76,7 +78,7 @@ const ManageMembers = () => {
                           </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          {user?.name}
+                          {user?.displayName}
                         </td>
 
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -87,7 +89,7 @@ const ManageMembers = () => {
                             ></span>
                             <button
                               onClick={() => {
-                                handleUpdateRole(user._id, "member", "user");
+                                handleUpdateRole(user?.email, "member", "user");
                               }}
                               className="relative"
                             >

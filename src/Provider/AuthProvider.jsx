@@ -54,11 +54,14 @@ const AuthProvider = ({ children }) => {
   // save user
   const saveUser = async (user) => {
     const currentUser = {
-      name: user?.name,
+      name: user?.displayName,
       email: user?.email,
       role: "user",
     };
-    const { data } = await axios.put(`http://localhost:5000/user`, currentUser);
+    const { data } = await axios.put(
+      `https://server-peach-omega-42.vercel.app/user`,
+      currentUser
+    );
     return data;
   };
 

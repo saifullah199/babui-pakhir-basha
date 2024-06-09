@@ -9,7 +9,7 @@ const MakeAnounce = () => {
 
     const announce = { title, description };
     console.log(announce);
-    fetch("http://localhost:5000/announces", {
+    fetch("https://server-peach-omega-42.vercel.app/announces", {
       method: "POST",
       headers: {
         "content-type": "application/json",
